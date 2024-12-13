@@ -21,7 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 .foregroundColor: NSColor.labelColor
             ]
             button.attributedTitle = NSAttributedString(
-                string: "working[00:00]",
+                string: "[00:00]",
                 attributes: attributes
             )
         }
@@ -93,7 +93,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let minutes = (elapsed % 3600) / 60
         
         if let button = statusItem.button {
-            let timeString = String(format: "working[%02d:%02d]", hours, minutes)
+            let timeString = String(format: "[%02d:%02d]", hours, minutes)
             let attributes: [NSAttributedString.Key: Any] = [
                 .foregroundColor: hours >= 1 ? NSColor.systemRed : NSColor.labelColor
             ]
