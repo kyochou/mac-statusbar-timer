@@ -15,3 +15,7 @@ DerivedData/
 
 # vscode
 .history/
+
+
+# app
+StatusBarTimer.app/

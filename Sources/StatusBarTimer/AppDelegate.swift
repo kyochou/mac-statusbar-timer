@@ -27,6 +27,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         
         let menu = NSMenu()
+        menu.addItem(NSMenuItem(title: "重新计时", action: #selector(resetTimerManually), keyEquivalent: "r"))
+        menu.addItem(NSMenuItem.separator())
         menu.addItem(NSMenuItem(title: "退出", action: #selector(quit), keyEquivalent: "q"))
         statusItem.menu = menu
     }
@@ -71,7 +73,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         )
     }
     
-    @objc private func resetTimer(_ notification: Notification) {
+    @objc private func resetTimer(_ notification: Notification?) {
         startTime = Date()
         updateTime()
     }
@@ -106,5 +108,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @objc private func quit() {
         NSApplication.shared.terminate(nil)
+    }
+    
+    @objc private func resetTimerManually() {
+        startTime = Date()
+        updateTime()
     }
 }
