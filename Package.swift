@@ -2,14 +2,14 @@
 import PackageDescription
 
 let package = Package(
-    name: "StatusBarTimer",
+    name: "WorkingTimer",
     platforms: [
         .macOS(.v12)
     ],
     targets: [
         .executableTarget(
-            name: "StatusBarTimer",
-            path: "Sources/StatusBarTimer"
+            name: "WorkingTimer",
+            path: "Sources/WorkingTimer"
         )
     ]
 ) 

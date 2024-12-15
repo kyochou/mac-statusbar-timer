@@ -1,4 +1,4 @@
-PRODUCT_NAME = StatusBarTimer
+PRODUCT_NAME = WorkingTimer
 BUILD_DIR = .build
 RELEASE_DIR = $(BUILD_DIR)/release
 APP_DIR = $(PRODUCT_NAME).app
