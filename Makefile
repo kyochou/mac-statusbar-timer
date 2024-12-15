@@ -3,6 +3,7 @@ BUILD_DIR = .build
 RELEASE_DIR = $(BUILD_DIR)/release
 APP_DIR = $(PRODUCT_NAME).app
 INSTALL_DIR = /Applications
+RESOURCES_DIR = Resources
 
 .PHONY: all clean build install uninstall
 
@@ -16,7 +17,9 @@ build:
 # 创建 .app 包
 app: build
 	@mkdir -p $(APP_DIR)/Contents/MacOS
+	@mkdir -p $(APP_DIR)/Contents/Resources
 	@cp $(RELEASE_DIR)/$(PRODUCT_NAME) $(APP_DIR)/Contents/MacOS/
+	@cp $(RESOURCES_DIR)/AppIcon.icns $(APP_DIR)/Contents/Resources/
 	@echo '<?xml version="1.0" encoding="UTF-8"?>\
 	<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\
 	<plist version="1.0">\
@@ -35,13 +38,15 @@ app: build
 		<string>12.0</string>\
 		<key>LSUIElement</key>\
 		<true/>\
+		<key>CFBundleIconFile</key>\
+		<string>AppIcon.icns</string>\
 	</dict>\
 	</plist>' > $(APP_DIR)/Contents/Info.plist
 
 # 安装到应用程序目录
 install: app
 	@if [ -d "$(INSTALL_DIR)/$(APP_DIR)" ]; then\
-		rm -rf "$(INSTALL_DIR)/$(APP_DIR)";\
+			rm -rf "$(INSTALL_DIR)/$(APP_DIR)";\
 	fi
 	@cp -R $(APP_DIR) $(INSTALL_DIR)/
 	@echo "Installed to $(INSTALL_DIR)/$(APP_DIR)"
