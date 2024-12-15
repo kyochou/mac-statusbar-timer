@@ -27,7 +27,7 @@ app: build
 		<key>CFBundleExecutable</key>\
 		<string>$(PRODUCT_NAME)</string>\
 		<key>CFBundleIdentifier</key>\
-		<string>com.example.$(PRODUCT_NAME)</string>\
+		<string>cn.org.kyo.$(PRODUCT_NAME)</string>\
 		<key>CFBundleName</key>\
 		<string>$(PRODUCT_NAME)</string>\
 		<key>CFBundlePackageType</key>\
