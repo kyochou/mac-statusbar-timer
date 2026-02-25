@@ -5,6 +5,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem!
     private var timer: Timer?
     private var startTime: Date?
+    private var hasAlerted = false
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         DispatchQueue.main.async { [weak self] in
@@ -75,6 +76,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @objc private func resetTimer(_ notification: Notification?) {
         startTime = Date()
+        hasAlerted = false
         updateTime()
     }
     
@@ -104,6 +106,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 attributes: attributes
             )
         }
+
+        // 超过1小时时弹窗提醒（每次计时周期仅一次）
+        if hours >= 1 && !hasAlerted {
+            hasAlerted = true
+            showAlert(hours: hours, minutes: minutes)
+        }
+    }
+
+    private func showAlert(hours: Int, minutes: Int) {
+        let alert = NSAlert()
+        alert.messageText = "⏰ 该休息了！"
+        alert.informativeText = "你已经连续工作了 \(hours) 小时 \(minutes) 分钟，起来活动一下吧！"
+        alert.alertStyle = .warning
+        alert.addButton(withTitle: "好的")
+        alert.addButton(withTitle: "重新计时")
+        let response = alert.runModal()
+        if response == .alertSecondButtonReturn {
+            resetTimerManually()
+        }
     }
     
     @objc private func quit() {
@@ -112,6 +133,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @objc private func resetTimerManually() {
         startTime = Date()
+        hasAlerted = false
         updateTime()
     }
 }
