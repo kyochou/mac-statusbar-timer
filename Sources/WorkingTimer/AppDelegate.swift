@@ -6,6 +6,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var timer: Timer?
     private var startTime: Date?
     private var hasAlerted = false
+    private var currentAlert: NSAlert?
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         DispatchQueue.main.async { [weak self] in
@@ -75,6 +76,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @objc private func resetTimer(_ notification: Notification?) {
+        dismissAlertIfNeeded()
         startTime = Date()
         hasAlerted = false
         updateTime()
@@ -121,10 +123,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         alert.alertStyle = .warning
         alert.addButton(withTitle: "好的")
         alert.addButton(withTitle: "重新计时")
+        currentAlert = alert
         let response = alert.runModal()
+        currentAlert = nil
         if response == .alertSecondButtonReturn {
             resetTimerManually()
         }
+    }
+
+    private func dismissAlertIfNeeded() {
+        guard let alert = currentAlert else { return }
+        currentAlert = nil
+        NSApp.abortModal()
+        alert.window.close()
     }
     
     @objc private func quit() {
@@ -132,6 +143,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @objc private func resetTimerManually() {
+        dismissAlertIfNeeded()
         startTime = Date()
         hasAlerted = false
         updateTime()
